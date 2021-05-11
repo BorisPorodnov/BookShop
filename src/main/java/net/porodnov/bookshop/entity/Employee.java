@@ -11,9 +11,18 @@ public class Employee {
     private Long id;
 
     private String name;
+    private String age;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "employee")
     private List<OrderEntity> orders;
+
+    public String getAge() {
+        return age;
+    }
+
+    public void setAge(String age) {
+        this.age = age;
+    }
 
     public List<OrderEntity> getOrders() {
         return orders;

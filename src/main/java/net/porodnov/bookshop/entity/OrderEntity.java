@@ -8,15 +8,20 @@ public class OrderEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     @ManyToOne
     @JoinColumn(name = "customer_id")
     private Customer customer;
 
     @ManyToOne
-    @JoinColumn(name ="eployee_id")
+    @JoinColumn(name = "eployee_id")
     private Employee employee;
 
-    private LocalDateTime starOfPurchase;
+    @ManyToOne
+    @JoinColumn(name = "book_id")
+    private BookEntity book;
+
+    private LocalDateTime startOfPurchase;
 
     public OrderEntity() {
     }
@@ -45,12 +50,19 @@ public class OrderEntity {
         this.employee = employee;
     }
 
-    public LocalDateTime getStarOfPurchase() {
-        return starOfPurchase;
+    public LocalDateTime getStartOfPurchase() {
+        return startOfPurchase;
     }
 
-    public void setStarOfPurchase(LocalDateTime starOfPurchase) {
-        this.starOfPurchase = starOfPurchase;
+    public void setStartOfPurchase(LocalDateTime starOfPurchase) {
+        this.startOfPurchase = starOfPurchase;
     }
 
+    public BookEntity getBook() {
+        return book;
+    }
+
+    public void setBook(BookEntity book) {
+        this.book = book;
+    }
 }

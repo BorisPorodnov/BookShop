@@ -1,11 +1,7 @@
 package net.porodnov.bookshop.entity;
 
-import net.porodnov.bookshop.model.BookGenre;
-
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.List;
 
 @Entity
 public class BookEntity {
@@ -13,11 +9,39 @@ public class BookEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    private String Author;
     private String title;
     private double price;
-    private BookGenre bookGenre;
+    private Genre genre;
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "book")
+    private List<OrderEntity> orders;
 
     public BookEntity() {
+    }
+
+    public String getAuthor() {
+        return Author;
+    }
+
+    public void setAuthor(String author) {
+        Author = author;
+    }
+
+    public Genre getGenre() {
+        return genre;
+    }
+
+    public void setGenre(Genre genre) {
+        this.genre = genre;
+    }
+
+    public List<OrderEntity> getOrders() {
+        return orders;
+    }
+
+    public void setOrders(List<OrderEntity> orders) {
+        this.orders = orders;
     }
 
     public Long getId() {
@@ -42,13 +66,5 @@ public class BookEntity {
 
     public void setPrice(double price) {
         this.price = price;
-    }
-
-    public BookGenre getBookGenry() {
-        return bookGenre;
-    }
-
-    public void setBookGenry(BookGenre bookGenre) {
-        this.bookGenre = bookGenre;
     }
 }
