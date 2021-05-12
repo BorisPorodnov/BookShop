@@ -18,17 +18,26 @@ public class BookService {
         this.bookDao = bookDao;
     }
 
-    public List<Book> getBook() throws BookNotFoundException {
-        List<BookEntity> listBooks = (List<BookEntity>) bookDao.findAll();
-        List<Book> books = new ArrayList<>();
-        if (listBooks.isEmpty()) {
-            throw new BookNotFoundException("Книг не существеут");
+    public Book getBookBy(BookEntity entity) throws BookNotFoundException {
+        BookEntity e = bookDao.findByTitle(entity.getTitle());
+        if (e == null) {
+            throw new BookNotFoundException("Данной книги не существует");
         }
-        for (BookEntity book : listBooks) {
-            Book bookRes = Book.toModel(book);
-            books.add(bookRes);
-        }
-        return books;
+        Book bookResponse = Book.toModel(e);
+        return bookResponse;
     }
 
-}
+        public List<Book> getBook() throws BookNotFoundException {
+            List<BookEntity> listBooks = (List<BookEntity>) bookDao.findAll();
+            List<Book> books = new ArrayList<>();
+            if (listBooks.isEmpty()) {
+                throw new BookNotFoundException("Книг не существеут");
+            }
+            for (BookEntity book : listBooks) {
+                Book bookRes = Book.toModel(book);
+                books.add(bookRes);
+            }
+            return books;
+        }
+
+    }

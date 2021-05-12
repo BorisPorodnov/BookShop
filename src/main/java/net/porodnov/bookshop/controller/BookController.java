@@ -1,5 +1,6 @@
 package net.porodnov.bookshop.controller;
 
+import net.porodnov.bookshop.entity.BookEntity;
 import net.porodnov.bookshop.exception.BookNotFoundException;
 import net.porodnov.bookshop.service.BookService;
 import org.springframework.http.ResponseEntity;
@@ -11,7 +12,8 @@ public class BookController {
 
     private final BookService bookService;
 
-    public BookController(BookService bookService) {
+    public BookController(BookService bookService)
+    {
         this.bookService = bookService;
     }
 
@@ -21,8 +23,20 @@ public class BookController {
             return ResponseEntity.ok(bookService.getBook());
         } catch (BookNotFoundException e) {
             return ResponseEntity.badRequest().body(e.getMessage());
-        }catch (Exception e){
+        } catch (Exception e) {
             return ResponseEntity.badRequest().body("Произошла ошибка");
         }
     }
+
+    @PostMapping("/title")
+    public ResponseEntity findBy(@RequestBody BookEntity entity) {
+        try {
+            return ResponseEntity.ok(bookService.getBookBy(entity));
+        } catch (BookNotFoundException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body("Произошла ошибка");
+        }
+    }
+
 }
